@@ -1,25 +1,10 @@
-import sys
+N = int(input())
 
-input = sys.stdin.readline
+s = [0] * (N + 1)
+s[1] = 9
 
-n = int(input())
-cost = []
-
-cost.append(0)
-for _ in range(n):
-    value = int(input())
-    cost.append(value)
-
-if n < 3:
-    print(sum(cost))
-    exit(0)
-
-s = [0] * (n + 1)
-
-s[1] = cost[1]
-s[2] = cost[2] + s[1]
-
-for i in range(3, n + 1):
-    s[i] = max(s[i - 1], s[i - 3] + cost[i - 1] + cost[i], s[i - 2] + cost[i])
+for i in range(2, N + 1):
+    one_count = 2 ** (i - 2)
+    s[i] = (s[i - 1] - one_count) * 2 + one_count * 1
     
-print(max(s))
+print(s[N])
