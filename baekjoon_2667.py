@@ -58,7 +58,6 @@ for key in graph.keys():
     if len(graph[key]) > 0 and key not in temp:
         bfs(key)
         
-print(graph)
 result = sorted(result)
 print(len(result))
 for value in result:
