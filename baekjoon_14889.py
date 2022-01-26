@@ -1,32 +1,58 @@
-from itertools import combinations
+import sys
+input = sys.stdin.readline
 
 N = int(input())
-S = [list(map(int, input().split())) for _ in range(N)]
-members = [i for i in range(N)]
-possible_team = []
+array = []
+s = []
+answer = sys.maxsize
+idx = 0
+case = []
 
+for _ in range(N):
+    row = list(map(int, input().split()))
+    array.append(row)
 
-for team in list(combinations(members, N//2)):
-    possible_team.append(team)
-
-min_stat_gap = 10000
-for i in range(len(possible_team)//2):
-    
-    team = possible_team[i]
-    stat_A = 0
-    for j in range(N//2):
-        member = team[j]
-        for k in team:
-            stat_A += S[member][k] 
+def calc(s):
+    rest = [i for i in range(1, N  + 1)]
+    team1_val = 0
+    team2_val = 0
+        
+    for i in range(len(s) - 1):
+        rest.remove(s[i])
+        for j in range(i + 1, len(s)):
+            team1_val += array[s[i] - 1][s[j] - 1]
+            team1_val += array[s[j] - 1][s[i] - 1]
+                
+    rest.remove(s[-1])
+        
+    for i in range(len(rest) - 1):
+        for j in range(i + 1, len(rest)):
+            team2_val += array[rest[i] - 1][rest[j] - 1]
+            team2_val += array[rest[j] - 1][rest[i] - 1]
             
+    return team1_val, team2_val
+
+def check(v1, v2):
+    global answer
+    if abs(v1 - v2) < answer:
+        answer = abs(v1 - v2)
     
-    team = possible_team[-i-1]
-    stat_B = 0
-    for j in range(N//2):
-        member = team[j]
-        for k in team:
-            stat_B += S[member][k]
-            
-    min_stat_gap = min(min_stat_gap, abs(stat_A - stat_B))
+def solve(index):
     
-print(min_stat_gap)
+    if len(s) == N // 2:
+        case.append(set(s))
+        v1, v2 = calc(s)
+        check(v1, v2)
+        return
+    
+    for i in range(index, N):
+        if i in s:
+            continue
+        s.append(i)
+        solve(i + 1)
+        s.pop()
+
+
+if __name__ == "__main__":
+    solve(0)
+    print(answer)
