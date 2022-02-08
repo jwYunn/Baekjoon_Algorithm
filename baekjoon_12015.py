@@ -1,22 +1,24 @@
-N = int(input())
-array = list(map(int, input().split()))
+import sys 
+input = sys.stdin.readline 
+n = int(input()) 
+array = list(map(int, input().split())) 
+lis = [0] 
 
-start = 0
-end = len(array)
 
-while start <= end:
-    mid = (start + end) // 2
-    count = 0
-    temp = 0
-    
-    for i in array:
-        if not temp:
-            temp = i
-            continue
-        if temp < i:
-            count += 1
-    
-    
+for num in array:
+    print(lis)
+    if lis[-1] < num: 
+        lis.append(num) 
+    else: 
+        left = 0 
+        right = len(lis) 
         
-    
-    
+        while left < right: 
+            mid = (right + left) // 2 
+            if lis[mid] < num: 
+                left = mid + 1 
+            else: 
+                right = mid 
+        lis[right] = num 
+        
+print(len(lis)-1)
