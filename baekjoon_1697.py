@@ -3,7 +3,6 @@ from collections import deque
 
 input = sys.stdin.readline
 
-
 def bfs(v):
     q = deque([v])
     
@@ -15,7 +14,6 @@ def bfs(v):
             if 0 <= i <= 100000 and not visited[i]:
                 visited[i] = visited[v] + 1
                 q.append(i)
-
 
 n, k = map(int, input().split())
 visited = [0] * 100001

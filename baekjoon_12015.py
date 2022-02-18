@@ -6,7 +6,6 @@ lis = [0]
 
 
 for num in array:
-    print(lis)
     if lis[-1] < num: 
         lis.append(num) 
     else: 
