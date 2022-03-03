@@ -1,12 +1,11 @@
-import heapq
-from re import I
+from math import dist
 import sys
+import heapq
 input = sys.stdin.readline
 
 def dijkstra(start):
-    
-    distances[start] = 0
     q = []
+    distances[start] = 0
     heapq.heappush(q, [distances[start], start])
     
     while q:
@@ -20,14 +19,13 @@ def dijkstra(start):
             
             if distance < distances[adjacent]:
                 distances[adjacent] = distance
-                heapq.heappush(q, [distance, adjacent])
-                
-    return distances
+                heapq.heappush(q, [distances[adjacent], adjacent])
 
 test_case = int(input())
 
 for _ in range(test_case):
     n, d, c = map(int, input().split())
+    
     graph = {key : {} for key in range(1, n + 1)}
     distances = {key : float('inf') for key in range(1, n + 1)}
     
@@ -37,12 +35,8 @@ for _ in range(test_case):
         
     dijkstra(c)
     
+    print(distances)
+    
     count = 0
-    max_distance = 0
     for key, value in distances.items():
-        if value == float('inf'):
-            continue
-        count += 1
-        if value > max_distance:
-            max_distance = value
-    print(count, max_distance)
+        if key 
